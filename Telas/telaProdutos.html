@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="../style.css">
+    <title>Produtos</title>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="menu-bar">
+                <span>Produtos e Fornecedores</span>
+                <div class="links">
+                    <ul>
+                        <li>
+                            <a id="telaProdutos" href="#">Produtos</a>
+                        </li>
+                        <li>
+                            <a id="telaFornecedor" href="telaFonecedores.html">Fornecedores</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="formularioProdutos">
+            <div class="camposInput">
+                <span>Nome Produto</span>
+                <input type="text" class="input">
+            </div>
+            <div class="camposInput">
+                <span>Fornecedor</span>
+                <input type="text" class="input">
+            </div>
+            <button id="btnCadastroProdutos" class="btn-primario">Cadastrar</button>
+        </div>
+        <div id="tabela_produtos" class="tabela"></div>
+    </main>
+
+
+    <!--------------------Popups------------------------->
+
+        <!--------------------CADASTRAR------------------------->
+
+        <div id="telaCadastrar" class="telaCadastrar">
+            <div id="containerCadastrar" class="containerCadastrar">
+                <h3 class="tituloPopup">Cadastrar Produtos</h3>
+                <div class="formCadastrarProdutos">
+                    <form id="form_produto_cad" class="form">
+                        <div class="camposPopup">
+                            <p class="legendaCampos">Nome</p>
+                            <input id="prod_nome" class="inputB" type="text" required>
+                        </div>
+                        <div class="camposPopup">
+                            <p class="legendaCampos">Descrição</p>
+                            <input id="prod_desc" class="inputB" type="text" required>
+                        </div>
+                        <div class="camposPopup">
+                            <p class="legendaCampos">Preço</p>
+                            <input id="prod_preco" class="inputB" type="text" required>
+                        </div>
+                        <div class="camposPopup">
+                            <p class="legendaCampos">Quantidade</p>
+                            <input id="prod_quant" class="inputB" type="text" required>
+                        </div>
+                        <div class="camposPopup">
+                            <p class="legendaCampos">Fornecedor</p>
+                            <select class="inputB" name="Fornecedor" id="selectFornecedor">
+                                <option value="">Selecione um Fornecedor</option>
+                            </select>
+                        </div>
+                        <div class="botoesPopup">
+                            <button id="btnCancelarPopup" class="btn-secundario btn-popup" type="button">Cancelar</button>
+                            <button class="btn-primario btn-popup" type="submit">Cadastrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!--------------------CADASTRAR------------------------->
+
+        <!--------------------ALTERAR------------------------->
+
+        <div id="telaAlterar" class="telaAlterar">
+            <div id="containerAlterar" class="containerAlterar">
+                <h3 class="tituloPopup">Alterar Produto</h3>
+                <div class="formAlterarProdutos">
+                    <form id="form_produto_alt" class="form">
+                        <input type="hidden" id="prod_id_alt">
+                        <div class="camposPopup">
+                            <p class="legendaCampos">Nome</p>
+                            <input id="prod_nome_alt" class="inputB" type="text">
+                        </div>
+                        <div class="camposPopup">
+                            <p class="legendaCampos">Descrição</p>
+                            <input id="prod_desc_alt" class="inputB" type="text">
+                        </div>
+                        <div class="camposPopup">
+                            <p class="legendaCampos">Preço</p>
+                            <input id="prod_preco_alt" class="inputB" type="text">
+                        </div>
+                        <div class="camposPopup">
+                            <p class="legendaCampos">Quantidade</p>
+                            <input id="prod_quant_alt" class="inputB" type="text">
+                        </div>
+                        <div class="camposPopup">
+                            <p class="legendaCampos">Fornecedor</p>
+                            <select class="inputB" name="Fornecedor" id="selectFornecedor">
+                                <option value="">Selecione um Fornecedor</option>
+                            </select>
+                        </div>
+                        <div class="botoesPopup">
+                            <button id="btnCancelarPopup_alt" class="btn-secundario btn-popup" type="button">Cancelar</button>
+                            <button class="btn-primario btn-popup" type="submit">Alterar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!--------------------ALTERAR------------------------->
+
+
+    <script src="../Script/produtos.js"></script>
+</body>
+</html>
