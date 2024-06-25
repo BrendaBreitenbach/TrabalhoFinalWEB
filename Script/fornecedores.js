@@ -28,6 +28,13 @@ document.getElementById('btnCadastroFornecedor').addEventListener("click", funct
 document.getElementById('btnCancelarPopup').addEventListener("click", function() {
     document.getElementById('telaCadastrar').style.display = 'none';
     document.getElementById('containerCadastrar').style.display = 'none';
+
+    //Limpando campos
+    document.getElementById('forn_nome').value = '';
+    document.getElementById('forn_endereco').value = '';
+    document.getElementById('forn_telefone').value = '';
+    document.getElementById('forn_email').value = '';
+    document.getElementById('forn_cnpj').value = '';
 });
 
 
@@ -150,13 +157,19 @@ document.getElementById('form_fornecedor_cad').addEventListener('submit', async 
             const message = await response.text();
 
             if (response.ok) {
-                alert("Fornecedor cadastrado com sucesso!");
+                //alert("Fornecedor cadastrado com sucesso!");
 
                 //FECHA O POPUP APOS CADASTRAR UM FORNECEDOR
                 document.getElementById('telaCadastrar').style.display = 'none';
                 document.getElementById('containerCadastrar').style.display = 'none';
 
                 window.location.reload();
+                //Limpando campos
+                document.getElementById('forn_nome').value = '';
+                document.getElementById('forn_endereco').value = '';
+                document.getElementById('forn_telefone').value = '';
+                document.getElementById('forn_email').value = '';
+                document.getElementById('forn_cnpj').value = '';
 
             } else {
                 alert(message);
@@ -285,7 +298,7 @@ async function deletarFornecedor(id){
             }
         });
         if(response.ok){
-            alert("Fornecedor deletado com sucesso!");
+            //alert("Fornecedor deletado com sucesso!");
         }
     } catch(error){
         console.log(error);

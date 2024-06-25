@@ -24,6 +24,13 @@ document.getElementById('btnCadastroProdutos').addEventListener("click", functio
 document.getElementById('btnCancelarPopup').addEventListener("click", function() {
     document.getElementById('telaCadastrar').style.display = 'none';
     document.getElementById('containerCadastrar').style.display = 'none';
+
+    //Limpando campos
+    document.getElementById('prod_nome').value = '';
+    document.getElementById('prod_desc').value = '';
+    document.getElementById('prod_preco').value = '';
+    document.getElementById('prod_quant').value = '';
+    document.getElementById('selectFornecedor').value = '';
 });
 
 //FECHA O POPUP DE ALTERAR DO PRODUTO
@@ -205,13 +212,21 @@ document.getElementById('form_produto_cad').addEventListener('submit', async fun
         const message = await response.text();
 
         if (response.ok) {
-            alert("Produto cadastrado com sucesso!");
+            //alert("Produto cadastrado com sucesso!");
 
             //FECHA O POPUP APOS CADASTRAR UM PRODUTO
             document.getElementById('telaCadastrar').style.display = 'none';
             document.getElementById('containerCadastrar').style.display = 'none';
 
             window.location.reload();
+
+            //Limpando campos
+            document.getElementById('prod_nome').value = '';
+            document.getElementById('prod_desc').value = '';
+            document.getElementById('prod_preco').value = '';
+            document.getElementById('prod_quant').value = '';
+            document.getElementById('selectFornecedor').value = '';
+
 
         } else {
             alert(message);
