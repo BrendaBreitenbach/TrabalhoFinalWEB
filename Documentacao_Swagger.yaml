@@ -1,0 +1,521 @@
+openapi: 3.0.3
+info:
+  title: API de Produtos e Fornecedores - OpenAPI 3.0
+  description: |
+    Esta é uma API de exemplo para gerenciamento de Produtos e Fornecedores, baseada na especificação OpenAPI 3.0.
+    Você pode encontrar mais informações sobre OpenAPI em [https://swagger.io](https://swagger.io).
+    
+    Esse trabalho foi produzido pelos seguintes integrantes:
+    
+    Brenda Breitenbach - 
+    Eduardo Roscioli - 
+    Mauro Fantin
+    
+
+    Você pode visitar nosso repositório no Github através deste link: [API de Produtos e Fornecedores](https://github.com/BrendaBreitenbach/TrabalhoFinalWEB).
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000/api
+    description: Servidor local
+
+tags:
+  - name: produto
+    description: Operações relacionadas a Produtos
+  - name: fornecedor
+    description: Operações relacionadas a Fornecedores
+
+paths:
+  /produtos:
+    get:
+      tags:
+        - produto
+      summary: Lista todos os produtos
+      responses:
+        '200':
+          description: Retorna a lista de produtos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Produto'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Produto'
+            application/x-www-form-urlencoded:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Produto'
+
+  /produto/{nomeProduto}:
+    get:
+      tags:
+        - produto
+      summary: Busca produto pelo nome
+      parameters:
+        - name: nomeProduto
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Sucesso na operação
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Produto'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Produto'
+            application/x-www-form-urlencoded:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Produto'
+        '404':
+          description: Produto não encontrado
+        '500':
+          description: Erro interno no servidor
+
+  /produto/forn/{nomeForn}:
+    get:
+      tags:
+        - produto
+      summary: Busca produto pelo nome do fornecedor
+      parameters:
+        - name: nomeForn
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Sucesso na operação
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Produto'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Produto'
+            application/x-www-form-urlencoded:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Produto'
+        '404':
+          description: Produto não encontrado
+        '500':
+          description: Erro interno no servidor
+
+  /produtos/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+    get:
+      tags:
+        - produto
+      summary: Retorna um produto pelo ID
+      responses:
+        '200':
+          description: Retorna o produto encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Produto'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Produto'
+            application/x-www-form-urlencoded:
+              schema:
+                $ref: '#/components/schemas/Produto'
+        '400':
+          description: ID inválido
+        '404':
+          description: Produto não encontrado
+
+    post:
+      tags:
+        - produto
+      summary: Cria um novo produto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProdutoInput'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/ProdutoInput'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProdutoInput'
+      responses:
+        '201':
+          description: Produto criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Produto'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Produto'
+            application/x-www-form-urlencoded:
+              schema:
+                $ref: '#/components/schemas/Produto'
+        '400':
+          description: Requisição inválida
+        '422':
+          description: Exceção de validação
+
+    put:
+      tags:
+        - produto
+      summary: Atualiza um produto existente
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProdutoInput'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/ProdutoInput'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProdutoInput'
+      responses:
+        '200':
+          description: Produto atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Produto'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Produto'
+            application/x-www-form-urlencoded:
+              schema:
+                $ref: '#/components/schemas/Produto'
+        '400':
+          description: Entrada inválida
+        '404':
+          description: Produto não encontrado
+        '422':
+          description: Exceção de validação
+
+    delete:
+      tags:
+        - produto
+      summary: Deleta um produto pelo ID
+      responses:
+        '200':
+          description: Produto deletado com sucesso
+        '400':
+          description: Valor do produto inválido
+        '404':
+          description: Produto não encontrado
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+
+  /fornecedores:
+    get:
+      tags:
+        - fornecedor
+      summary: Lista todos os fornecedores
+      responses:
+        '200':
+          description: Retorna a lista de fornecedores
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Fornecedor'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Fornecedor'
+            application/x-www-form-urlencoded:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Fornecedor'
+
+  /fornecedores/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+    get:
+      tags:
+        - fornecedor
+      summary: Retorna um fornecedor pelo ID
+      responses:
+        '200':
+          description: Retorna o fornecedor encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Fornecedor'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Fornecedor'
+            application/x-www-form-urlencoded:
+              schema:
+                $ref: '#/components/schemas/Fornecedor'
+        '400':
+          description: ID inválido
+        '404':
+          description: Fornecedor não encontrado
+
+    post:
+      tags:
+        - fornecedor
+      summary: Cria um novo fornecedor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FornecedorInput'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/FornecedorInput'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/FornecedorInput'
+      responses:
+        '201':
+          description: Fornecedor criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Fornecedor'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Fornecedor'
+            application/x-www-form-urlencoded:
+              schema:
+                $ref: '#/components/schemas/Fornecedor'
+        '400':
+          description: Requisição inválida
+        '422':
+          description: Exceção de validação
+
+    put:
+      tags:
+        - fornecedor
+      summary: Atualiza um fornecedor existente
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FornecedorInput'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/FornecedorInput'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/FornecedorInput'
+      responses:
+        '200':
+          description: Fornecedor atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Fornecedor'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Fornecedor'
+            application/x-www-form-urlencoded:
+              schema:
+                $ref: '#/components/schemas/Fornecedor'
+        '400':
+          description: Entrada inválida
+        '404':
+          description: Fornecedor não encontrado
+        '422':
+          description: Exceção de validação
+
+    delete:
+      tags:
+        - fornecedor
+      summary: Deleta um fornecedor pelo ID
+      responses:
+        '200':
+          description: Fornecedor deletado com sucesso
+        '400':
+          description: Valor do fornecedor inválido
+        '404':
+          description: Fornecedor não encontrado
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+
+  /fornecedores/{nome}:
+    get:
+      tags:
+        - fornecedor
+      summary: Busca fornecedor por nome
+      parameters:
+        - name: nome
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Sucesso na operação
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Fornecedor'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Fornecedor'
+            application/x-www-form-urlencoded:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Fornecedor'
+        '404':
+          description: Fornecedor não encontrado
+        '500':
+          description: Erro interno no servidor
+
+  /fornecedores/cnpj/{cnpj}:
+    get:
+      tags:
+        - fornecedor
+      summary: Busca fornecedor por CNPJ
+      parameters:
+        - name: cnpj
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Sucesso na operação
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Fornecedor'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Fornecedor'
+            application/x-www-form-urlencoded:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Fornecedor'
+        '404':
+          description: Fornecedor não encontrado
+        '500':
+          description: Erro interno no servidor
+
+components:
+  schemas:
+    Produto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        nome:
+          type: string
+        descricao:
+          type: string
+        preco:
+          type: number
+          format: float
+        quantidade:
+          type: integer
+        fornecedor:
+          type: integer
+          format: int64
+
+    ProdutoInput:
+      type: object
+      properties:
+        nome:
+          type: string
+        descricao:
+          type: string
+        preco:
+          type: number
+          format: float
+        quantidade:
+          type: integer
+        fornecedor:
+          type: integer
+
+    Fornecedor:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        nome:
+          type: string
+        endereco:
+          type: string
+        telefone:
+          type: string
+        email:
+          type: string
+        cnpj:
+          type: string
+
+    FornecedorInput:
+      type: object
+      properties:
+        nome:
+          type: string
+        endereco:
+          type: string
+        telefone:
+          type: string
+        email:
+          type: string
+        cnpj:
+          type: string
