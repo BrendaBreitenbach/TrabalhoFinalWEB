@@ -18,7 +18,7 @@
                 <div class="links">
                     <ul>
                         <li>
-                            <a id="telaProdutos" href="#">Produtos</a>
+                            <a id="telaProdutos" href="telaProdutos.html">Produtos</a>
                         </li>
                         <li>
                             <a id="telaFornecedor" href="telaFonecedores.html">Fornecedores</a>
@@ -30,17 +30,19 @@
     </header>
     <main>
         <div class="formularioProdutos">
-            <div class="camposInput">
-                <span>Nome Produto</span>
-                <input type="text" class="input">
-            </div>
-            <div class="camposInput">
-                <span>Fornecedor</span>
-                <input type="text" class="input">
-            </div>
+
+                <div class="camposInput">
+                    <span>Nome Produto</span>
+                    <input id="pesquisaNomeProd" type="text" class="input">
+                </div>
+                <div class="camposInput">
+                    <span>Fornecedor</span>
+                    <input id="pesquisaNomeForn" type="text" class="input">
+                </div>
+
             <button id="btnCadastroProdutos" class="btn-primario">Cadastrar</button>
         </div>
-        <div id="tabela_produtos" class="tabela"></div>
+        <div id="tabela_produtos" class="tabela table-responsive"></div>
     </main>
 
 
@@ -112,8 +114,7 @@
                         </div>
                         <div class="camposPopup">
                             <p class="legendaCampos">Fornecedor</p>
-                            <select class="inputB" name="Fornecedor" id="selectFornecedor">
-                                <option value="">Selecione um Fornecedor</option>
+                            <select class="inputB" name="Fornecedor" id="selectFornecedor_alt">
                             </select>
                         </div>
                         <div class="botoesPopup">

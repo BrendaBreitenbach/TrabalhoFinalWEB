@@ -52,7 +52,21 @@ async function deletarFornecedor(id) {
 
 //Busca todos os produtos
 async function selectProdutos(){
-    const results = await produtos.query("SELECT * FROM produto;");
+    const results = await produtos.query("SELECT * FROM viewProduto;");
+    return results[0];
+}
+
+//Busca produtos por nome
+async function selectProdutosNome(nomeProduto){
+    const results = await produtos.query("SELECT * FROM viewProduto where nome LIKE ?;",[`%${nomeProduto}%`]);
+    return results[0];
+}
+
+//Busca produtos por fornecedor
+async function selectProdutosForn(nomeForn){
+    const results = await produtos.query("SELECT * FROM viewProduto where fornNome LIKE ?;",[`%${nomeForn}%`]);
+    console.log(nomeForn);
+    console.log(results[0]);
     return results[0];
 }
 
@@ -90,6 +104,8 @@ module.exports = {
     alterarFornecedor,
     deletarFornecedor,
     selectProdutos,
+    selectProdutosNome,
+    selectProdutosForn,
     selectProdutoID,
     inserirProdutos,
     alterarProduto,

@@ -34,6 +34,10 @@
 
 /*-------------------------------*/
 
+.selected {
+    border-bottom: 2px solid #fff; /* ou qualquer cor de sua preferência */
+}
+
 .menu-bar {
     background: #83ace6;
     height: 5rem;
@@ -68,7 +72,7 @@ a{
     align-items: center;
     height: 10rem;
     justify-content: space-around;
-    margin: 3rem 10rem;
+    margin: 3rem 8rem;
     border: 2px solid #83ace6;
     border-radius: 0.5rem;
 }
@@ -79,9 +83,13 @@ a{
     align-items: center;
     height: 10rem;
     justify-content: space-around;
-    margin: 3rem 10rem;
+    margin: 3rem 8rem;
     border: 2px solid #83ace6;
     border-radius: 0.5rem;
+}
+
+.camposForm{
+    display: flex;
 }
 
 .camposInput{
@@ -89,7 +97,7 @@ a{
     flex-direction: column;
     justify-content: center;
     margin-bottom: 1.3rem;
-    width: 25%;
+    width: 30%;
     span{
         color: #555555;
     }
@@ -103,7 +111,7 @@ a{
 }
 
 .tabela{
-    margin: 0 10rem;
+    margin: 0 8rem;
     border: 2px solid #83ace6;
     border-radius: 0.5rem;
     padding: 1rem;
@@ -138,7 +146,7 @@ a{
 
 .containerCadastrar{
     width: 35%;
-    height: 75%;
+    height: 80%;
     background: #fff;
     border-radius: 30px;
     flex-direction: column;
@@ -149,7 +157,7 @@ a{
 
 .containerAlterar{
     width: 35%;
-    height: 75%;
+    height: 80%;
     background: #fff;
     border-radius: 30px;
     flex-direction: column;
@@ -225,5 +233,161 @@ a{
 /*-----------------------------------*/
 
 @media screen and (max-width: 1100px) {
-    
+    .formularioProdutos, .formularioFornecedores {
+        margin: 3rem 5rem;
+    }
+    .tabela{
+        margin: 0 5rem;
+    }
+
+    .containerCadastrar, .containerAlterar {
+        width: 45%;
+        height: 80%;
+        background: #fff;
+        border-radius: 30px;
+        flex-direction: column;
+        justify-content: center;
+        border: none;
+        display: none;
+    }
 }
+
+@media screen and (max-width: 930px) {
+    .formularioProdutos, .formularioFornecedores {
+        margin: 3rem 2rem;
+    }
+    .tabela{
+        margin: 0 2rem;
+    }
+
+    .containerCadastrar, .containerAlterar {
+        width: 50%;
+        height: 80%;
+        background: #fff;
+        border-radius: 30px;
+        flex-direction: column;
+        justify-content: center;
+        border: none;
+        display: none;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .formularioProdutos, .formularioFornecedores {
+        margin: 3rem 1rem;
+    }
+    .tabela{
+        margin: 0 1rem;
+    }
+
+    .menu-bar {
+        background: #83ace6;
+        height: 7.5rem;
+        display: flex;
+        justify-content: center;
+        padding: 0 5rem;
+        color: #fff;
+        font-size: 2rem;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    ul{
+        margin: 0;
+        padding: 0;
+    }
+
+    .containerCadastrar, .containerAlterar {
+        width: 55%;
+        height: 80%;
+        background: #fff;
+        border-radius: 30px;
+        flex-direction: column;
+        justify-content: center;
+        border: none;
+        display: none;
+    }
+}
+
+@media screen and (max-width: 700px) {
+
+    .containerCadastrar, .containerAlterar {
+        width: 70%;
+        height: 80%;
+        background: #fff;
+        border-radius: 30px;
+        flex-direction: column;
+        justify-content: center;
+        border: none;
+        display: none;
+    }
+}
+
+@media screen and (max-width: 530px) {
+    .menu-bar {
+        background: #83ace6;
+        height: 8.5rem;
+        display: flex;
+        justify-content: center;
+        padding: 0 1rem;
+        color: #fff;
+        font-size: 1.9rem;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .containerCadastrar, .containerAlterar {
+        width: 85%;
+        height: 80%;
+        background: #fff;
+        border-radius: 30px;
+        flex-direction: column;
+        justify-content: center;
+        border: none;
+        display: none;
+    }
+
+    .formularioProdutos, .formularioFornecedores {
+        margin: 3rem 1rem;
+        flex-direction: column;
+        height: 15rem;
+    }
+    .camposInput {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-bottom: 0;
+        width: 80%;
+    }
+    .form {
+        width: 90%;
+        height: auto;
+    }
+
+    .botoesPopup{
+        margin: 2rem 0;
+        width: 100%;
+        display: flex;
+        justify-content: space-evenly;
+    }
+    .btn-popup {
+        width: 7rem;
+        height: 2.5rem;
+    }
+}
+
+/**
+    .formularioFornecedores {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 15rem;
+        justify-content: space-around;
+        margin: 3rem 1rem;
+        border: 2px solid #83ace6;
+        border-radius: 0.5rem;
+    }
+    .camposInput {
+        width: 80%;
+    }
+**/

@@ -2,7 +2,18 @@
 //CARREGA A LISTA DE FORNECEDORES
 document.addEventListener('DOMContentLoaded', (Event) => {
     buscaFornecedores();
+
+    const endereco = window.location.pathname.split('/').pop();
+    const links = document.querySelectorAll('.links a');
+
+    links.forEach(link => {
+        const enderecoNavBar = link.getAttribute('href').split('/').pop();
+        if (enderecoNavBar === endereco) {
+            link.classList.add('selected');
+        }
+    });
 });
+
 
 
 //ABRE POPUP DE CADASTRO DO FORNECEDOR
@@ -30,7 +41,13 @@ document.getElementById('btnCancelarPopup_alt').addEventListener("click", functi
 document.getElementById('pesquisaFornNome').addEventListener('keydown', function (event) {
     if (event.key === 'Enter') {
         const nomeFornecedor = document.getElementById('pesquisaFornNome').value.trim();
-        buscaFornecedorNome(nomeFornecedor);
+        if(nomeFornecedor == ''){
+            buscaFornecedores();
+        } else {
+            buscaFornecedorNome(nomeFornecedor);
+        }
+    } else {
+        buscaFornecedores();
     }
 });
 
@@ -39,7 +56,13 @@ document.getElementById('pesquisaFornNome').addEventListener('keydown', function
 document.getElementById('pesquisaFornCNPJ').addEventListener('keydown', function (event) {
     if (event.key === 'Enter') {
         const cnpj = document.getElementById('pesquisaFornCNPJ').value.trim();
-        buscaFornecedorCNPJ(cnpj);
+        if(cnpj == ''){
+            buscaFornecedores();
+        } else {
+            buscaFornecedorCNPJ(cnpj);
+        }
+    } else {
+        buscaFornecedores();
     }
 });
 
@@ -159,8 +182,6 @@ document.getElementById('form_fornecedor_alt').addEventListener('submit', async 
         const message = await response.text();
 
         if (response.ok) {
-            alert("Fornecedor atualizado com sucesso!");
-
             //FECHA O POPUP  DEPOIS DE ALTERAR O FORNECEDOR
             document.getElementById('telaAlterar').style.display = 'none';
             document.getElementById('containerAlterar').style.display = 'none';
@@ -237,12 +258,12 @@ async function listarFornecedores(fornecedores) {
         tabelaHTML += `
                         <tr id="linha-${fornecedores[i].id_fornecedor}">
                             <th scope="row">${fornecedores[i].id_fornecedor}</th>
-                            <td>${fornecedores[i].nome}</td>
+                            <td class="text">${fornecedores[i].nome}</td>
                             <td class="text">${fornecedores[i].endereco}</td>
-                            <td>${fornecedores[i].telefone}</td>
-                            <td>${fornecedores[i].email}</td>
-                            <td>${fornecedores[i].cnpj}</td>
-                            <td>
+                            <td class="text">${fornecedores[i].telefone}</td>
+                            <td class="text">${fornecedores[i].email}</td>
+                            <td class="text">${fornecedores[i].cnpj}</td>
+                            <td class="text">
                                 <div>
                                     <button data-id="${fornecedores[i].id_fornecedor}" class="btn-operacoes btn-alterar">
                                         <i class="bi bi-pencil"></i>

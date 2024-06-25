@@ -1,6 +1,16 @@
 
 document.addEventListener('DOMContentLoaded', (Event) => {
     buscaProdutos();
+
+    const endereco = window.location.pathname.split('/').pop();
+    const links = document.querySelectorAll('.links a');
+
+    links.forEach(link => {
+        const enderecoNavBar = link.getAttribute('href').split('/').pop();
+        if (enderecoNavBar === endereco) {
+            link.classList.add('selected');
+        }
+    });
 });
 
 //ABRE POPUP DE CADASTRO DO PRODUTO
@@ -25,6 +35,72 @@ document.getElementById('btnCancelarPopup_alt').addEventListener("click", functi
 document.addEventListener('DOMContentLoaded', function() {
     preencherSelectFornecedores();
 });
+
+
+//PESQUISA DO PRODUTO POR NOME
+document.getElementById('pesquisaNomeProd').addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') {
+        const nomeProduto = document.getElementById('pesquisaNomeProd').value.trim();
+        if(nomeProduto == ''){
+            buscaProdutos();
+        } else {
+            buscaProdutoNome(nomeProduto);
+        }
+    } else {
+        buscaProdutos();
+    }
+        
+});
+
+//PESQUISA DO PRODUTO POR NOME DO FORNECEDOR
+document.getElementById('pesquisaNomeForn').addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') {
+        const nomeForn = document.getElementById('pesquisaNomeForn').value.trim();
+        if(nomeForn == ''){
+            buscaProdutos();
+        } else{
+            buscaProdutoForn(nomeForn);
+        }
+    } else {
+        buscaProdutos();
+    }
+});
+
+
+//FUNÇÃO DE BUSCA DO PRODUTO POR NOME
+async function buscaProdutoNome(nomeProduto){
+    try{
+        const response = await fetch(`http://localhost:3000/api/produto/${nomeProduto}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const produtos = await response.json();
+        console.log(produtos)
+        listarProdutos(produtos);
+    } catch(error){
+        console.log(error);
+    }
+};
+
+//FUNÇÃO DE BUSCA DO PRODUTO POR NOME DO FORNECEDOR
+async function buscaProdutoForn(nomeForn){
+    try{
+        const response = await fetch(`http://localhost:3000/api/produto/forn/${nomeForn}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const produtos = await response.json();
+        console.log(produtos)
+        listarProdutos(produtos);
+    } catch(error){
+        console.log(error);
+    }
+};
+
 
 //FUNÇÃO QUE BUSCA TODOS OS FORNECEDORES PARA AS OPÇÕES DO SELECT
 async function buscaFornecedores(){
@@ -82,6 +158,21 @@ async function preencherSelectFornecedores() {
 
     // Limpar opções existentes (caso necessário)
     //selectFornecedor.innerHTML = '';
+
+    fornecedores.forEach(fornecedor => {
+        const option = document.createElement('option');
+        option.value = fornecedor.id_fornecedor;
+        option.textContent = fornecedor.nome;
+        selectFornecedor.appendChild(option);
+    });
+};
+
+async function preencherSelectFornecedoresAlt() {
+    const selectFornecedor = document.getElementById('selectFornecedor_alt');
+    const fornecedores = await buscaFornecedores();
+
+    // Limpar opções existentes (caso necessário)
+    selectFornecedor.innerHTML = '';
 
     fornecedores.forEach(fornecedor => {
         const option = document.createElement('option');
@@ -156,12 +247,12 @@ async function listarProdutos(produtos) {
         tabelaHTML += `
                         <tr id="linha-${produtos[i].id_produto}">
                             <th scope="row">${produtos[i].id_produto}</th>
-                            <td>${produtos[i].nome}</td>
+                            <td class="text">${produtos[i].nome}</td>
                             <td class="text">${produtos[i].descricao}</td>
-                            <td>${produtos[i].preco}</td>
-                            <td>${produtos[i].quantidade}</td>
-                            <td>${produtos[i].fornecedor}</td>
-                            <td>
+                            <td class="text">${produtos[i].preco}</td>
+                            <td class="text">${produtos[i].quantidade}</td>
+                            <td class="text">${produtos[i].fornNome}</td>
+                            <td class="text">
                                 <div>
                                     <button data-id="${produtos[i].id_produto}" class="btn-operacoes btn-alterar">
                                         <i class="bi bi-pencil"></i>
@@ -191,15 +282,15 @@ async function listarProdutos(produtos) {
                 const produto = await buscarProdutoPorId(id);
                 document.getElementById('telaAlterar').style.display = 'flex';
                 document.getElementById('containerAlterar').style.display = 'flex';
+                await preencherSelectFornecedoresAlt();
                 console.log(produto);
                 if (produto) {
                     document.getElementById('prod_nome_alt').value = produto.nome;
                     document.getElementById('prod_desc_alt').value = produto.descricao;
                     document.getElementById('prod_preco_alt').value = produto.preco;
                     document.getElementById('prod_quant_alt').value = produto.quantidade;
-                
+                    document.getElementById('selectFornecedor_alt').value = produto.id_fornecedor;
                     document.getElementById('prod_id_alt').value = produto.id_produto;
-
                 } else {
                     console.error("Produto não encontrado");
                 }
@@ -228,6 +319,45 @@ async function listarProdutos(produtos) {
 };
 
 
+//ALTERAR UM PRODUTO
+document.getElementById('form_produto_alt').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const id = document.getElementById('prod_id_alt').value;
+    const nome = document.getElementById('prod_nome_alt').value;
+    const descricao = document.getElementById('prod_desc_alt').value;
+    const preco = document.getElementById('prod_preco_alt').value;
+    const quantidade = document.getElementById('prod_quant_alt').value;
+    const id_fornecedor = document.getElementById('selectFornecedor_alt').value;
+
+    //console.log(nome, " ", descricao, " ", preco, " ", quantidade," ", fornecedor,"." );
+
+    try{
+        const response = await fetch(`http://localhost:3000/api/produtos/${id}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ nome, descricao, preco, quantidade, id_fornecedor})
+        });
+
+        const message = await response.text();
+
+        if (response.ok) {
+            //FECHA O POPUP  DEPOIS DE ALTERAR O FORNECEDOR
+            document.getElementById('telaAlterar').style.display = 'none';
+            document.getElementById('containerAlterar').style.display = 'none';
+
+            window.location.reload();
+
+        } else {
+            alert(message);
+        }
+    } catch(error){
+        console.error('Erro ao cadastrar fornecedor:', error);
+        alert('Erro no servidor');
+    }
+});
+
 //FUNÇÃO DE DELETAR UM PRODUTI
 async function deletarProduto(id){
     try{
@@ -238,7 +368,6 @@ async function deletarProduto(id){
             }
         });
         if(response.ok){
-            alert("Produto deletado com sucesso!");
         }
     } catch(error){
         console.log(error);

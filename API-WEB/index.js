@@ -17,6 +17,20 @@ app.get("/api/produtos", async (request, response) => {
     response.json(resultado);
 });
 
+//Busca produtos por nome
+app.get("/api/produto/:nomeProduto", async (request, response) => {
+    const nomeProduto = request.params.nomeProduto;
+    const resultado = await db.selectProdutosNome(nomeProduto);
+    response.json(resultado);
+});
+
+//Busca produtos por fornecedor
+app.get("/api/produto/forn/:nomeForn", async (request, response) => {
+    const nomeForn = request.params.nomeForn;
+    const resultado = await db.selectProdutosForn(nomeForn);
+    response.json(resultado);
+});
+
 //Busca produto por ID
 app.get("/api/produtos/:id", async (request, response) => {
     const id_produto = parseInt(request.params.id);
