@@ -47,7 +47,6 @@ async function deletarFornecedor(id) {
     await fornecedores.query("DELETE FROM fornecedor WHERE id_fornecedor=?", [id]);
 }
 
-
 //CRUD Produtos
 
 //Busca todos os produtos

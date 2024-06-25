@@ -1,4 +1,5 @@
 
+
 //CARREGA A LISTA DE FORNECEDORES
 document.addEventListener('DOMContentLoaded', (Event) => {
     buscaFornecedores();
@@ -130,34 +131,84 @@ document.getElementById('form_fornecedor_cad').addEventListener('submit', async 
     const email = document.getElementById('forn_email').value;
     const cnpj = document.getElementById('forn_cnpj').value;
 
-    try{
-        const response = await fetch('http://localhost:3000/api/fornecedores', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ nome, endereco, telefone, email, cnpj})
-        });
+    //VALIDAÇÕES (TELEFONE, EMAIL, CNPJ)
+    if (!validarTelefone(telefone)) {
+    } else if(!validarEmail(email)) {
+        alert("Email inválido, por favor digite um email válido!");
+    } else if(!validaCNPJ(cnpj)) {
+        alert("CNPJ inválido, por favor digite um CNPJ válido!");
+    } else { 
+        try{
+            const response = await fetch('http://localhost:3000/api/fornecedores', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ nome, endereco, telefone, email, cnpj})
+            });
 
-        const message = await response.text();
+            const message = await response.text();
 
-        if (response.ok) {
-            alert("Fornecedor cadastrado com sucesso!");
+            if (response.ok) {
+                alert("Fornecedor cadastrado com sucesso!");
 
-            //FECHA O POPUP APOS CADASTRAR UM FORNECEDOR
-            document.getElementById('telaCadastrar').style.display = 'none';
-            document.getElementById('containerCadastrar').style.display = 'none';
+                //FECHA O POPUP APOS CADASTRAR UM FORNECEDOR
+                document.getElementById('telaCadastrar').style.display = 'none';
+                document.getElementById('containerCadastrar').style.display = 'none';
 
-            window.location.reload();
+                window.location.reload();
 
-        } else {
-            alert(message);
+            } else {
+                alert(message);
+            }
+        } catch(error){
+            console.error('Erro ao cadastrar fornecedor:', error);
+            alert('Erro no servidor');
         }
-    } catch(error){
-        console.error('Erro ao cadastrar fornecedor:', error);
-        alert('Erro no servidor');
     }
+
 });
+
+//FUNÇÃO QUE VALIDA O TELEFONE
+function validarTelefone(telefone) {
+    
+    const telefoneNum = telefone.replace(/\D/g, '');
+
+    if (telefoneNum.length === 11) {
+        const regex = /^\d{2}9\d{4}\d{4}$/;
+        return regex.test(telefoneNum);
+    } else {
+        alert("Telefone inválido, por favor digite um telefone no formato: (XX) 9XXXX-YYYY");
+        return false;
+    }
+}
+
+//FUNÇÃO QUE VALIDA O EMAIL
+function validarEmail(email) {
+    return validator.isEmail(email);
+}
+
+//FUNÇÃO QUE VALIDA O CNPJ
+function validaCNPJ (cnpj) {
+    var b = [ 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 ]
+    var c = String(cnpj).replace(/[^\d]/g, '')
+    
+    if(c.length !== 14)
+        return false
+
+    if(/0{14}/.test(c))
+        return false
+
+    for (var i = 0, n = 0; i < 12; n += c[i] * b[++i]);
+    if(c[12] != (((n %= 11) < 2) ? 0 : 11 - n))
+        return false
+
+    for (var i = 0, n = 0; i <= 12; n += c[i] * b[i++]);
+    if(c[13] != (((n %= 11) < 2) ? 0 : 11 - n))
+        return false
+
+    return true
+}
 
 
 //ALTERAR UM FORNECEDOR
@@ -170,30 +221,38 @@ document.getElementById('form_fornecedor_alt').addEventListener('submit', async 
     const email = document.getElementById('forn_email_alt').value;
     const cnpj = document.getElementById('forn_cnpj_alt').value;
 
-    try{
-        const response = await fetch(`http://localhost:3000/api/fornecedores/${id}`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ nome, endereco, telefone, email, cnpj})
-        });
+    //VALIDAÇÕES (TELEFONE, EMAIL, CNPJ)
+    if (!validarTelefone(telefone)) {
+    } else if(!validarEmail(email)) {
+        alert("Email inválido, por favor digite um email válido!");
+    } else if(!validaCNPJ(cnpj)) {
+        alert("CNPJ inválido, por favor digite um CNPJ válido!");
+    } else {
+        try{
+            const response = await fetch(`http://localhost:3000/api/fornecedores/${id}`, {
+                method: 'PUT',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ nome, endereco, telefone, email, cnpj})
+            });
 
-        const message = await response.text();
+            const message = await response.text();
 
-        if (response.ok) {
-            //FECHA O POPUP  DEPOIS DE ALTERAR O FORNECEDOR
-            document.getElementById('telaAlterar').style.display = 'none';
-            document.getElementById('containerAlterar').style.display = 'none';
+            if (response.ok) {
+                //FECHA O POPUP  DEPOIS DE ALTERAR O FORNECEDOR
+                document.getElementById('telaAlterar').style.display = 'none';
+                document.getElementById('containerAlterar').style.display = 'none';
 
-            window.location.reload();
+                window.location.reload();
 
-        } else {
-            alert(message);
+            } else {
+                alert(message);
+            }
+        } catch(error){
+            console.error('Erro ao cadastrar fornecedor:', error);
+            alert('Erro no servidor');
         }
-    } catch(error){
-        console.error('Erro ao cadastrar fornecedor:', error);
-        alert('Erro no servidor');
     }
 });
 
